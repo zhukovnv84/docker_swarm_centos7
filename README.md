@@ -105,7 +105,7 @@ template/hosts - have to be like this
 
 9 - This script for add all this zoo to zabbix. After you have to add in zabbix server by hands.
 tasks/zabbix.yml
-change zabbix ip external, zabbix ip internal
+change zabbix ip external, zabbix ip internal.
 
 
 
