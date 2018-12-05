@@ -115,6 +115,7 @@ template/hosts - have to be like this
 192.168.x.x prod-m-01
 
 192.168.x.x prod-m-02
+
 192.168.x.x prod-m-03
 
 192.168.x.x prod-w-01
