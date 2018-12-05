@@ -1,0 +1,33 @@
+---
+- name: stop firewalld
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: no
+
+- name: stop Network.services
+  systemd:
+    name: NetworkManager.service
+    state: stopped
+    enabled: no
+
+
+- selinux:
+    state: disabled
+
+
+
+- name: reboot my server
+  shell: sleep 3 && reboot now
+  async: 1
+  poll:  0
+
+- name:  Wait till my server will come up
+  wait_for:
+     host: "{{ inventory_hostname  }}"
+     state: started
+     delay: 5
+     timeout: 60 
+  delegate_to: 127.0.0.1
+ 
+

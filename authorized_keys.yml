@@ -1,0 +1,15 @@
+---
+- hosts: prod_all 
+  tasks:
+  - name: make direcotry
+    file:
+      path: "/root/.ssh"
+      state: directory
+  - name: create empty file
+    file:
+      path: "/root/.ssh/authorized_keys"
+      state: touch
+  - name: put pubkey
+    lineinfile:
+      path: "/root/.ssh/authorized_keys"
+      line: "{{ pubkey }}"

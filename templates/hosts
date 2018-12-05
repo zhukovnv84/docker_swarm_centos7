@@ -1,0 +1,14 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+127.0.0.1 localhost
+192.168.x.x prod-m-01
+192.168.x.x prod-m-02
+192.168.x.x prod-m-03
+192.168.x.x prod-w-01
+192.168.x.x prod-w-02
+192.168.x.x prod-w-03
+192.168.x.x prod-w-04
+192.168.x.x prod-w-05
+192.168.x.x nexus 
+192.168.x.x bitbucket 
+192.168.x.x zabbix 

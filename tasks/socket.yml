@@ -1,0 +1,31 @@
+---
+- name:  copying file limits.conf to servers
+  copy:
+    src: limits.conf
+    dest: /etc/security/limits.conf
+   # remote_src: yes
+
+- name:  copying file systemctl.conf to servers
+  copy:
+    src: sysctl.conf
+    dest: /etc/sysctl.conf
+
+
+- name:  Rebuild the initramfs
+  shell: dracut -v -f
+
+
+- name: reboot my server
+  shell: sleep 3 && reboot now
+  async: 1
+  poll:  0
+
+- name:  Wait till my server will come up
+  wait_for:
+     host: "{{ inventory_hostname  }}"
+     state: started
+     delay: 5
+     timeout: 60
+  delegate_to: 127.0.0.1
+
+

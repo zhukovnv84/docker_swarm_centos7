@@ -1,0 +1,12 @@
+---
+- name: Download elrepo
+  yum:
+   name: http://elrepo.org/linux/kernel/el7/x86_64/RPMS/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+   state: present
+- name: Install new kernel
+  yum: name=kernel-ml enablerepo=elrepo-kernel
+  tags: kernel4
+
+- name: enable boot with new kernel
+  shell: grub2-set-default 0
+  tags: kernel4

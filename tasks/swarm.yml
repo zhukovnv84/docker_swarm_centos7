@@ -1,0 +1,178 @@
+---
+
+- name: prepare docker
+  shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+- name: enable docker-ce-edge
+  shell: yum-config-manager  --enable docker-ce-edge
+
+- name:  yum docker-ce
+  yum: name=docker-ce state=latest
+
+
+
+- name:  start docker
+  service: name=docker state=started enabled=yes
+
+
+
+- name: restart docker 1
+  service: name=docker state=restarted
+
+- name: clear all before
+  shell: rm -rf /etc/docker/*
+
+- name: docker swarm leave --force
+  shell: docker swarm leave --force
+
+- name: restart docker 2
+  service: name=docker state=restarted
+
+- name: get ip master for init
+  shell: hostname -i
+  register: m1_ip
+  delegate_to: "eco-prod-m-01"
+  run_once: true
+
+
+- name: "create primary swarm manager"
+  shell: docker swarm init
+  delegate_to: "eco-prod-m-01"
+#  when: install is defined
+  run_once: true
+
+
+- name: "get docker swarm manager token"
+  shell: docker swarm join-token -q manager
+  register: manager_token
+  delegate_to: "eco-prod-m-01"
+#  when: install is defined
+  run_once: true
+
+
+- name: "get docker swarm worker token"
+  shell: docker swarm join-token -q worker
+  register: worker_token
+  delegate_to: "eco-prod-m-01"
+#  when: install is defined
+  run_once: true
+
+
+###########################
+
+- name: "join as a manager2"
+  shell: "docker swarm join --token {{manager_token.stdout}} {{m1_ip.stdout}}:2377"
+  retries: 3
+  delay: 20
+  delegate_to: "eco-prod-m-02"
+  run_once: true
+#  when: install is defined
+
+- name: "join as a manager3"
+  shell: "docker swarm join --token {{manager_token.stdout}} {{m1_ip.stdout}}:2377"
+  retries: 3
+  delay: 20
+  delegate_to: "eco-prod-m-03"
+  run_once: true
+#  when: install is defined
+
+###########################
+
+
+
+- name: "join as a worker1"
+  shell: "docker swarm join --token {{worker_token.stdout}} {{m1_ip.stdout}}:2377"
+  retries: 3
+  delay: 20
+  delegate_to: "eco-prod-w-01"
+  run_once: true
+#  when: install is defined
+
+- name: "join as a worker2"
+  shell: "docker swarm join --token {{worker_token.stdout}} {{m1_ip.stdout}}:2377"
+  retries: 3
+  delay: 20
+  delegate_to: "eco-prod-w-02"
+  run_once: true
+#  when: install is defined
+
+- name: "join as a worker3"
+  shell: "docker swarm join --token {{worker_token.stdout}} {{m1_ip.stdout}}:2377"
+  retries: 3
+  delay: 20
+  delegate_to: "eco-prod-w-03"
+  run_once: true
+#  when: install is defined
+
+
+- name: "join as a worker4"
+  shell: "docker swarm join --token {{worker_token.stdout}} {{m1_ip.stdout}}:2377"
+  retries: 3
+  delay: 20
+  delegate_to: "eco-prod-w-04"
+  run_once: true
+#  when: install is defined
+
+- name: "join as a worker5"
+  shell: "docker swarm join --token {{worker_token.stdout}} {{m1_ip.stdout}}:2377"
+  retries: 3
+  delay: 20
+  delegate_to: "eco-prod-w-05"
+  run_once: true
+#  when: install is defined
+
+#################################
+
+- name:  copying file docker.services to /usr/lib/systemd/system/
+  copy:
+    src: templates/docker.services
+    dest: /usr/lib/systemd/system/docker.service
+
+- name:  copying file /etc/hosts
+  copy:
+     src: templates/hosts
+     dest: /etc/hosts
+
+
+
+- name: systemctl daemon-reload
+  shell: systemctl daemon-reload
+
+
+- name:  restart docker
+  service: name=docker state=restarted
+
+
+
+- name: make dir /etc/docker
+  file: path=/etc/docker state=directory
+
+
+
+- name: cp daemonjson
+  template: 
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json  
+
+
+- name:  restart docker again
+  service: name=docker state=restarted
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

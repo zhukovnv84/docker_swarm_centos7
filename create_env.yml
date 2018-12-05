@@ -1,0 +1,17 @@
+---
+- hosts: prod_all 
+ 
+
+  tasks:
+#    - include: tasks/essentialsoftware.yml
+#    - include: tasks/open-vm-tools.yml
+#    - include: tasks/kernel4.yml
+#    - include: tasks/ntpd.yml
+    - include: tasks/socket.yml
+#    - include: tasks/disable-firewalld.yml
+#    - include: tasks/nfs_client.yml
+#    - include: tasks/swarm.yml
+#    - include: tasks/zabbix.yml
+     
+
+

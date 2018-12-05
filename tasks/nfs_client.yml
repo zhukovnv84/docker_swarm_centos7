@@ -1,0 +1,48 @@
+---
+- name: Install a list of packages
+  yum:
+    name:
+      - nfs-utils
+    state: present
+
+#################
+
+- name:  start rpcbind
+  service: name=rpcbind state=started enabled=yes
+
+- name:  start nfs-server
+  service: name=nfs-server state=started enabled=yes
+
+- name:  start nfs-lock
+  service: name=nfs-lock state=started enabled=yes
+
+- name:  start nfs-idmap
+  service: name=nfs-idmap state=started enabled=yes
+
+#####################
+
+- name: make dir /data
+  file: path=/data state=directory
+
+
+- name: Insert a 192.168.200.220:/home/prod  /data   nfs      rw,sync,hard,intr  0     0  at the end of a file fstab.
+  lineinfile:
+    path: /etc/fstab
+    line: 192.168.200.220:/home/prod  /data   nfs      rw,sync,hard,intr  0     0
+
+
+
+- name: reboot my server
+  shell: sleep 3 && reboot now
+  async: 1
+  poll:  0
+
+- name:  Wait till my server will come up
+  wait_for:
+     host: "{{ inventory_hostname  }}"
+     state: started
+     delay: 5
+     timeout: 60 
+  delegate_to: 127.0.0.1
+
+

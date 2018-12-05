@@ -1,0 +1,30 @@
+---
+
+- name: Ensure EPEL is enabled 
+  yum: 
+    name=epel-release 
+    state=latest 
+
+
+
+- name: Install a list of packages
+  yum:
+    name:
+      - glances
+      - telnet
+      - net-tools
+      - mc
+      - vim
+      - wget
+      - htop
+      - bind-utils
+      - nano
+      - git
+    state: present
+
+
+
+- name: install the 'Development tools' package group
+  yum:
+    name: "@Development tools"
+    state: present
