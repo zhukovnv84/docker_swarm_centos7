@@ -35,47 +35,6 @@ ansible-playbook create_env.yml
 
 What it will to do?
 
-Let's see tree
-
-.
-├── ansible.cfg
-├── authorized_keys.retry
-├── authorized_keys.yml
-├── create_env.retry
-├── create_env.yml
-├── defaults
-│   └── main.yml
-├── hosts
-├── README.md
-├── tasks
-│   ├── disable-firewalld.yml
-│   ├── essentialsoftware.yml
-│   ├── kernel4.yml
-│   ├── nfs_client.yml
-│   ├── ntpd.yml
-│   ├── open-vm-tools.yml
-│   ├── socket.yml
-│   ├── swarm.yml
-│   └── zabbix.yml
-└── templates
-    ├── daemon.json.j2
-    ├── docker.services
-    ├── hosts
-    ├── limits.conf
-    ├── sysctl.conf
-    └── zabbix
-        ├── connection_port.sh
-        ├── iostat2.sh
-        ├── iostat_collect.sh
-        ├── iostat_parse.sh
-        ├── iostat.sh
-        ├── lmsensors.sh
-        ├── netstat.sh
-        ├── nginx-stats.sh
-        ├── php_workers_discovery.sh
-        └── zabbix_agentd.tpl
-
-
 
 
 1 - create all needed soft for you (that i like to use)
