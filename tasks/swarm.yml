@@ -31,7 +31,7 @@
 - name: get ip master for init
   shell: hostname -i
   register: m1_ip
-  delegate_to: "eco-prod-m-01"
+  delegate_to: "prod-m-01"
   run_once: true
 
 
@@ -45,7 +45,7 @@
 - name: "get docker swarm manager token"
   shell: docker swarm join-token -q manager
   register: manager_token
-  delegate_to: "eco-prod-m-01"
+  delegate_to: "prod-m-01"
 #  when: install is defined
   run_once: true
 
@@ -53,7 +53,7 @@
 - name: "get docker swarm worker token"
   shell: docker swarm join-token -q worker
   register: worker_token
-  delegate_to: "eco-prod-m-01"
+  delegate_to: "prod-m-01"
 #  when: install is defined
   run_once: true
 
@@ -64,7 +64,7 @@
   shell: "docker swarm join --token {{manager_token.stdout}} {{m1_ip.stdout}}:2377"
   retries: 3
   delay: 20
-  delegate_to: "eco-prod-m-02"
+  delegate_to: "prod-m-02"
   run_once: true
 #  when: install is defined
 
@@ -72,7 +72,7 @@
   shell: "docker swarm join --token {{manager_token.stdout}} {{m1_ip.stdout}}:2377"
   retries: 3
   delay: 20
-  delegate_to: "eco-prod-m-03"
+  delegate_to: "prod-m-03"
   run_once: true
 #  when: install is defined
 
@@ -84,7 +84,7 @@
   shell: "docker swarm join --token {{worker_token.stdout}} {{m1_ip.stdout}}:2377"
   retries: 3
   delay: 20
-  delegate_to: "eco-prod-w-01"
+  delegate_to: "prod-w-01"
   run_once: true
 #  when: install is defined
 
@@ -92,7 +92,7 @@
   shell: "docker swarm join --token {{worker_token.stdout}} {{m1_ip.stdout}}:2377"
   retries: 3
   delay: 20
-  delegate_to: "eco-prod-w-02"
+  delegate_to: "prod-w-02"
   run_once: true
 #  when: install is defined
 
@@ -100,7 +100,7 @@
   shell: "docker swarm join --token {{worker_token.stdout}} {{m1_ip.stdout}}:2377"
   retries: 3
   delay: 20
-  delegate_to: "eco-prod-w-03"
+  delegate_to: "prod-w-03"
   run_once: true
 #  when: install is defined
 
@@ -109,7 +109,7 @@
   shell: "docker swarm join --token {{worker_token.stdout}} {{m1_ip.stdout}}:2377"
   retries: 3
   delay: 20
-  delegate_to: "eco-prod-w-04"
+  delegate_to: "prod-w-04"
   run_once: true
 #  when: install is defined
 
@@ -117,7 +117,7 @@
   shell: "docker swarm join --token {{worker_token.stdout}} {{m1_ip.stdout}}:2377"
   retries: 3
   delay: 20
-  delegate_to: "eco-prod-w-05"
+  delegate_to: "prod-w-05"
   run_once: true
 #  when: install is defined
 
