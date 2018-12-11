@@ -1,5 +1,7 @@
 # dockerswarm_centos7
 
+
+
 This is ansible playbook for creating docker swarm in prod area
 
 Prepare:
@@ -45,6 +47,20 @@ Prepare:
 
 192.168.x.x
 
+--
+
+Configire SSH without password before run
+
+Before run you have to configure ssh without password beetween servers ansible and 8 servers linux centos 7.
+ - create public key run ssh-keyget in your os user, press  enter by default.
+ - less .ssh/id_rsa.pub 
+ copy publuc key and run command
+ 
+ ansible-playbook  authorized_keys.yml --ask-pass --extra-vars='pubkey="here copy_paste resoult less .ssh/id_rsa.pub"'
+
+--
+
+ 
 
 Run
 
